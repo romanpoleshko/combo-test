@@ -1,0 +1,68 @@
+.combobox-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  border: 2px solid white;
+  border-radius: 8px;
+  background-color: gainsboro;
+  overflow: hidden;
+
+  &__opened {
+    background-color: white;
+    border: 2px solid blue;
+
+    & > .input-wrapper img {
+      transform: rotate(180deg);
+    }
+  }
+
+  & > .input-wrapper {
+    display: flex;
+
+    & > * {
+      padding: 8px 16px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+    }
+
+    & > input {
+      width: 100%;
+      font-size: 14px;
+    }
+
+    & > button {
+      cursor: pointer;
+
+      & > img {
+        transition: transform 0.3s;
+        width: 8px;
+      }
+    }
+  }
+
+  & > .list-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  & .list-wrapper__item {
+    display: flex;
+    padding: 8px 16px;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+
+    & > * {
+      pointer-events: none;
+    }
+
+    & > img {
+      height: 16px;
+    }
+
+    &:hover {
+      background-color: aliceblue;
+    }
+  }
+};

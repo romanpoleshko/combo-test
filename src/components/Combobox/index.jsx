@@ -1,7 +1,11 @@
 import { useState, useRef } from "react";
 import PropTypes from 'prop-types';
 
-import { useOutsideClick } from "../../hooks";
+import ToggleIcon from 'src/assets/chevron.png';
+
+import { useOutsideClick } from "src/hooks";
+
+import './styles.scss';
 
 const Combobox = ({ placeholder = '', data = [] }) => {
   const ref = useRef(null);
@@ -29,31 +33,36 @@ const Combobox = ({ placeholder = '', data = [] }) => {
 
   const onItemClick = ({ target }) => {
     setSearchRequest('');
-    setCurrentValue(target.dataset.value);
+    setCurrentValue(target.dataset?.value);
+    closeList();
   };
 
   useOutsideClick(ref, closeList);
 
   return (
-    <div ref={ref}>
-      <div>
+    <div ref={ref} className={`combobox-container ${isOpened ? 'combobox-container__opened' : ''}`}>
+      <div className="input-wrapper">
         <input
           value={searchRequest || currentValue}
           onChange={onInputChange}
           placeholder={placeholder}
           onFocus={openList}
         />
-        <button onClick={toggleList}>-</button>
+        <button onClick={toggleList}>
+          <img src={ToggleIcon} alt="toggle_icon" />
+        </button>
       </div>
       {isOpened && (
-        <div>
-          {data.filter((item) => item.includes(searchRequest)).map((item, index) => (
+        <div className="list-wrapper">
+          {data.filter((item) => item?.title.includes(searchRequest)).map((item) => (
             <div
-              key={index}
+              key={item.id}
               onClick={onItemClick}
-              data-value={item}
+              data-value={item?.title}
+              className="list-wrapper__item"
             >
-              {item}
+              <img src={item?.icon} alt={item?.title} />
+              <span>{item?.title}</span>
             </div>
           ))}
         </div>
@@ -64,7 +73,11 @@ const Combobox = ({ placeholder = '', data = [] }) => {
 
 Combobox.propTypes = {
   placeholder: PropTypes.string,
-  data: PropTypes.arrayOf(PropTypes.string),
+  data: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    icon: PropTypes.string,
+  })),
 };
 
 export default Combobox;
