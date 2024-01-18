@@ -1,5 +1,5 @@
-import Combobox from './components/Combobox';
-import { fruits } from './mock.json';
+import Combobox from 'src/components/Combobox';
+import { fruits } from 'src/utils/mock';
 
 function App() {
   return <Combobox placeholder='Choose a Fruit' data={fruits} />;
